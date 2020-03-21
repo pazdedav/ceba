@@ -27,7 +27,7 @@
       "properties": {
           "description": "This will be displayed in the essentials, so make it good",
           "targetScope": "subscription",
-          "parameters": { 
+          "parameters": {
               "principalIds": {
                   "type": "string",
                   "metadata": {
@@ -47,7 +47,7 @@
               }
           }
       },
-      "type": "Microsoft.Blueprint/blueprints" 
+      "type": "Microsoft.Blueprint/blueprints"
   }
   ```
 
@@ -89,10 +89,11 @@
 - Specification of [policy assignment](https://docs.microsoft.com/en-us/rest/api/blueprints/artifacts/createorupdate#policyassignmentartifact)
 - Specification of [role assignment](https://docs.microsoft.com/en-us/rest/api/blueprints/artifacts/createorupdate#roleassignmentartifact)
 - Specification of [deployment template](https://docs.microsoft.com/en-us/rest/api/blueprints/artifacts/createorupdate#templateartifact)
+- Blueprint [samples](https://docs.microsoft.com/en-us/azure/governance/blueprints/samples/?WT.mc_id=social-twitter-stmuraws)
 
 ### Parameters
 
-- Nearly everything in a blueprint definition can be parameterized, except `roleDefinitionId` and` policyDefinitionId` in the `rbacAssignment` and `policyAssignment` artifacts respectively. 
+- Nearly everything in a blueprint definition can be parameterized, except `roleDefinitionId` and` policyDefinitionId` in the `rbacAssignment` and `policyAssignment` artifacts respectively.
 - Parameters are defined in the main blueprint file and can be referenced in any artifact.
 - You can use the same properties you can in an ARM template like `defaultValue`, `allowedValues`
 
@@ -100,7 +101,7 @@
 
 ### Passing values between artifacts
 
-- when you need to pass the output from one artifact as the input to another artifact that is deployed later in the blueprint assignment sequence. 
+- when you need to pass the output from one artifact as the input to another artifact that is deployed later in the blueprint assignment sequence.
 - make use of the `artifacts()` function which lets you reference the details of a particular artifact.
 
   Example - define output in `template` artifact:
@@ -114,7 +115,7 @@
       }
   }
   ```
-  
+
   Example - pass the output as a parameter in another artifact:
   ```json
   {
@@ -167,7 +168,7 @@
   {
       "properties": {
           "targetScope": "subscription",
-          "parameters": { 
+          "parameters": {
               "spnRuntimeIdParameter": {
                   "type": "string"
               }
@@ -178,7 +179,7 @@
               }
           }
       },
-      "type": "Microsoft.Blueprint/blueprints" 
+      "type": "Microsoft.Blueprint/blueprints"
   }
   ```
 
@@ -276,13 +277,13 @@
 
   Example environment variables:
   ```
-  env:        
-  SUBSCRIPTIONID: fa971420-4388-457a-ac56-1cd453785f14        
-  BLUEPRINTPATH: ./infrastructure        
-  BLUEPRINTNAME: testBluePrint        
-  SPNID: 529a5a8d-4dc4-4f1a-9d4f-3ba5f130446f        
-  SPNPASS: ${{ secrets.spnPass }}        
-  TENANTID: eb73c9bc-7f90-4841-9556-c3a56cc82c79        
+  env:
+  SUBSCRIPTIONID: fa971420-4388-457a-ac56-1cd453785f14
+  BLUEPRINTPATH: ./infrastructure
+  BLUEPRINTNAME: testBluePrint
+  SPNID: 529a5a8d-4dc4-4f1a-9d4f-3ba5f130446f
+  SPNPASS: ${{ secrets.spnPass }}
+  TENANTID: eb73c9bc-7f90-4841-9556-c3a56cc82c79
   MGID: charotmg
   ```
 
@@ -315,7 +316,7 @@
       exit 1
   }
   ```
-  
+
   Example publish script:
   ```powershell
   param(
@@ -345,7 +346,7 @@
       exit 1
   }
   ```
-  
+
   Example assignment script:
   ```powershell
   param(
@@ -362,8 +363,8 @@
 
   if (!(Get-Module -ListAvailable -Name Az.Blueprint)) {
       throw "Module does not exist"
-      exit 1 
-  } 
+      exit 1
+  }
 
   $securePass = ConvertTo-SecureString $spnPass -AsPlainText -Force
   $credential = New-Object -TypeName pscredential -ArgumentList $spnId, $securePass
@@ -374,7 +375,7 @@
   if($createdBlueprint)
   {
           (Get-Content $assignmentFile).replace("{{BLUEPRINTID}}",$createdBlueprint.id) | Set-Content $assignmentFile
-          New-AzBlueprintAssignment -Name "assigned-$blueprintName" -Blueprint $createdBlueprint -AssignmentFile $assignmentFile -SubscriptionId $subscriptionId 
+          New-AzBlueprintAssignment -Name "assigned-$blueprintName" -Blueprint $createdBlueprint -AssignmentFile $assignmentFile -SubscriptionId $subscriptionId
   }else
   {
       throw "Could not get Blueprint"
