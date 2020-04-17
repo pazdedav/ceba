@@ -1,5 +1,26 @@
 # Working with GitHub
 
+## GitHub CLI
+
+- Manual: download the binary from `https://github.com/cli/cli/releases/`, e.g. gh_0.6.4_windows_amd64.msi
+- Chocolatey: `choco install gh` or `choco upgrade gh`
+- Install the package to e.g. `C:\Program Files (x86)\GitHub CLI\` and ensure this folder is in your `PATH`
+
+### Examples
+
+- create an issue: `gh issue create -t "Save invokes a 500 error" -b "steps to reproduce: fill out the form, then press save."`
+- list issues: `gh issue list`
+- view a specific issue: `gh issue view 12`
+- check the status: `gh issue status`
+- create a repo: `gh repo create hello-world -d "A react app for the web" --public`
+- open the repo in a browser: `gh repo view`
+- fork a repo: `gh repo johnpapa/hello-worlds fork --clone`
+- create a PR (skipping the properties and using the commit info): `gh pr create --fill`
+- checkout a PR: `gh pr checkout`
+- list PRs: `gh pr list`
+- check the status of a PR: `gh pr status`
+- view a PR: `gh pr view`
+
 ## Commit signature verification
 
 Using GPG or S/MIME, you can sign tags and commits locally. These tags or commits are marked as verified on GitHub so other people can trust that the changes come from a trusted source. If a commit or tag has a GPG or S/MIME signature that is cryptographically verifiable, GitHub marks the commit or tag as verified.
