@@ -6,7 +6,7 @@
 - A blueprint consists of the main blueprint json file and a series of artifact json files
 - Create a folder or directory on your computer to store all of your blueprint files. The name of this folder will be the default name of the blueprint unless you specify a new name in the blueprint json file.
 
-  ```
+  ```text
   Blueprint directory (also the default blueprint name)
   * blueprint.json
   * artifacts
@@ -14,6 +14,7 @@
       - ...
       - more-artifacts.json
   ```
+
 - a variety of expressions and [functions](https://docs.microsoft.com/en-us/azure/governance/blueprints/reference/blueprint-functions) can be used in either a blueprint defintion or artifact such as `concat()` and `parameters()`.
 
 ## Blueprint definition
@@ -22,6 +23,7 @@
 - the blueprint must be created in Azure before any artifacts (policy, role, template). _The artifacts are child resources of a blueprint._ The `Az.Blueprint` module takes care of this for you automatically.
 
   Example boilerplate blueprint file:
+
   ```json
   {
       "properties": {
@@ -60,6 +62,7 @@
 ## Artifacts definition
 
   Example `policyAssignment.json` artifact definition:
+
   ```json
   {
       "properties": {
@@ -93,7 +96,7 @@
 
 ### Parameters
 
-- Nearly everything in a blueprint definition can be parameterized, except `roleDefinitionId` and` policyDefinitionId` in the `rbacAssignment` and `policyAssignment` artifacts respectively.
+- Nearly everything in a blueprint definition can be parameterized, except `roleDefinitionId` and`policyDefinitionId` in the `rbacAssignment` and `policyAssignment` artifacts respectively.
 - Parameters are defined in the main blueprint file and can be referenced in any artifact.
 - You can use the same properties you can in an ARM template like `defaultValue`, `allowedValues`
 
@@ -105,6 +108,7 @@
 - make use of the `artifacts()` function which lets you reference the details of a particular artifact.
 
   Example - define output in `template` artifact:
+
   ```json
   {
       "outputs": {
@@ -117,6 +121,7 @@
   ```
 
   Example - pass the output as a parameter in another artifact:
+
   ```json
   {
       "kind": "template",
@@ -140,6 +145,7 @@
 - you can use the `dependsOn` property to take a dependency on another artifact.
 
   Example of `dependsOn` property in an artifact:
+
   ```json
   {
       "kind": "template",
@@ -157,13 +163,13 @@
 - Example `build.ps1` pipeline [script](https://github.com/Azure/azure-blueprints/blob/master/pipelines-scripts/build.ps1)
 - Example `release.ps1` pipeline [script](https://github.com/Azure/azure-blueprints/blob/master/pipelines-scripts/release.ps1)
 
-
 ## CI/CD - Build phase
 
 - BP definition import together with artifacts (in draft mode) using `Import-AzBlueprintWithArtifact` that looks for `Blueprint.json` file (definition without artefacts).
 - Cmdlet will also look for a sub-folder named `Artifacts` in the same input path. All artifacts (template, roleAssignment, policyAssignment) are stored as separate JSON files
 
   Example `Blueprint.json` file:
+
   ```json
   {
       "properties": {
@@ -191,6 +197,7 @@
 - assign the latest published blueprint to a subscription using `New-AzBlueprintAssignment` command (requires a path to a JSON file that defines the blueprint that should be published together with parameters)
 
   Example `Assign.json` file:
+
   ```json
   {
       "identity": {
@@ -224,6 +231,7 @@
 - In the Deploy job, there are two steps to checkout and assign the latest published blueprint.
 
   Example `main.yml` file:
+
   ```yaml
   name: CI
 
@@ -276,7 +284,8 @@
   ```
 
   Example environment variables:
-  ```
+
+  ```txt
   env:
   SUBSCRIPTIONID: fa971420-4388-457a-ac56-1cd453785f14
   BLUEPRINTPATH: ./infrastructure
@@ -288,6 +297,7 @@
   ```
 
   Example import script:
+
   ```powershell
   param(
       [string]$subscriptionId = $env:SUBSCRIPTIONID,
@@ -318,6 +328,7 @@
   ```
 
   Example publish script:
+
   ```powershell
   param(
       [string]$subscriptionId = $env:SUBSCRIPTIONID,
@@ -348,6 +359,7 @@
   ```
 
   Example assignment script:
+
   ```powershell
   param(
       [string]$subscriptionId = $env:SUBSCRIPTIONID,
@@ -386,7 +398,6 @@
   Import script [source](https://github.com/charotAmine/BlueprintsAsCode/blob/master/00-importBlueprint.ps1)
   Publish script [source](https://github.com/charotAmine/BlueprintsAsCode/blob/master/01-publishBlueprint.ps1)
   Assignment script [source](https://github.com/charotAmine/BlueprintsAsCode/blob/master/02-assignBlueprint.ps1)
-
 
 Important:
 

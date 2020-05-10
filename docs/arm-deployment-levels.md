@@ -69,7 +69,7 @@ _Note: There is currently (March 2020) no CLI equivalent._
 - gives a possibility to deploy resources across scopes (e.g. a policy at the MG level, create RGs in a sub, create resources inside one RG)
 - instead of placing deployments in three separate files and call the 3 different PowerShell commands, we can combine these into a single deployment
 - this requires **nested templates**
-- all of the scopes support another resource, the **deployment resource**. We can use nested templates to create a deployment at another scope. 
+- all of the scopes support another resource, the **deployment resource**. We can use nested templates to create a deployment at another scope.
 - select the cmdlet representing the highest scope in your deployment, e.g. `New-AzManagementGroupDeployment`
 - the level of nesting can be confusing - instead of using inline templates, use template links to call out to separate template files containing your actual logic for each scope.
 
@@ -78,6 +78,7 @@ _Note: There is currently (March 2020) no CLI equivalent._
 Example of a MG scoped combined template with inline templates [here](https://github.com/sam-cogan/Demos/blob/master/Template%20Scopes/demo.json)
 
 Example command:
+
 ```powershell
 New-AzManagementGroupDeployment -ManagementGroupId "lambdaToysDevelopmentMgmt" -Location "West Europe" -TemplateFile "D:\templates\demo.json" -TemplateParameterFile "D:\templates\demo.params.json"
 ```
