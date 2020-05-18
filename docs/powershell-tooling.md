@@ -40,3 +40,20 @@ Clear-AzContext -force
 ```
 
 - Original [source](https://adatum.no/powershell/multiple-azure-credentials-in-powershell)
+
+## MSINFO32-like cmdlet
+
+`Get-ComputerInfo`
+
+- Want to know if the device is joined to AD?  Check CsPartOfDomain.  Want to know what domain?  Look at CsDomain (which will be WORKGROUP on an AAD-joined device).
+- Need to know if the device is UEFI or not?  Check to see if the BiosFirmwareType is Uefi.
+- Want to know how long Windows has been running since the last reboot?  Check OsUptime or OsLastBootUpTime.
+- How about the Windows SKU?  OsOperatingSystemSKU will tell you that.
+- Need to get a list of languages that are installed?  OsMuiLanguages has that list.
+- [Source](https://oofhours.com/2020/05/13/the-most-useful-powershell-cmdlet-i-didnt-know-existed/)
+
+## Managing AzDO using VSTeam PSH package
+
+- Source: [PowerShell Gallery](https://www.powershellgallery.com/packages/VSTeam/6.4.8)
+- TIP: Use `Invoke-VSTeamRequest` (`ivr` alias) cmdlet and use tab complete the areas and resources of every API in AzureDevOps
+- Project [site](https://github.com/DarqueWarrior/vsteam)
